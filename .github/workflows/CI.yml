@@ -46,10 +46,10 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y cpanminus
-          cpanm IPC::Cmd
-          cpanm File::Spec
-          cpanm File::Basename
-          cpanm Config
+          sudo cpanm IPC::Cmd
+          sudo cpanm File::Spec
+          sudo cpanm File::Basename
+          sudo cpanm Config
       - name: Install OpenSSL
         run: sudo apt-get update && sudo apt-get install -y make pkg-config libssl-dev
       - name: Set OpenSSL environment variables
