@@ -45,7 +45,7 @@ jobs:
       - name: Install PERL dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y cpanminus build-essential checkinstall zlib1g-dev
+          sudo apt-get install -y cpanminus
           cpanm --sudo IPC::Cmd File::Spec File::Basename
           echo 'export PERL5LIB=/usr/local/share/perl5:$PERL5LIB' >> $GITHUB_ENV
           echo 'export PATH=/usr/local/bin:$PATH' >> $GITHUB_ENV
@@ -53,21 +53,13 @@ jobs:
         run: |
           sudo apt-get update && sudo apt-get install -y make pkg-config libssl-dev
           sudo cpanm IPC::Cmd File::Spec File::Basename
-      - name: Compile OpenSSL
-        run: |
-          wget https://www.openssl.org/source/openssl-3.3.1.tar.gz
-          tar -xzvf openssl-3.3.1.tar.gz
-          cd openssl-3.3.1
-          ./config --prefix=/usr/local/ssl --openssldir=/usr/local/ssl shared zlib
-          make
-          sudo make install
       - name: Set OpenSSL environment variables
         run: |
-          echo 'export OPENSSL_DIR=/usr/local/ssl' >> $GITHUB_ENV
-          echo 'export OPENSSL_LIB_DIR=/usr/local/ssl/lib' >> $GITHUB_ENV
-          echo 'export OPENSSL_INCLUDE_DIR=/usr/local/ssl/include' >> $GITHUB_ENV
-          echo 'export LD_LIBRARY_PATH=/usr/local/ssl/lib:$LD_LIBRARY_PATH' >> $GITHUB_ENV
-          echo 'export PKG_CONFIG_PATH=/usr/local/ssl/lib/pkgconfig:$PKG_CONFIG_PATH' >> $GITHUB_ENV
+          echo 'export OPENSSL_DIR=/usr/lib/ssl' >> $GITHUB_ENV
+          echo 'export OPENSSL_LIB_DIR=/usr/lib/ssl/lib' >> $GITHUB_ENV
+          echo 'export OPENSSL_INCLUDE_DIR=/usr/include/openssl' >> $GITHUB_ENV
+          echo 'export DEP_OPENSSL_INCLUDE=/usr/include/openssl' >> $GITHUB_ENV
+          echo 'export PERL5LIB=/usr/local/share/perl5:$PERL5LIB' >> $GITHUB_ENV
       - name: Verify Perl installation
         run: |
           perl -V
@@ -76,10 +68,6 @@ jobs:
           perl -e 'use File::Basename; print "File::Basename is installed\n"'
       - name: Build wheels
         uses: PyO3/maturin-action@v1
-        env:
-          OPENSSL_DIR: /usr/local/ssl
-          OPENSSL_LIB_DIR: /usr/local/ssl/lib
-          OPENSSL_INCLUDE_DIR: /usr/local/ssl/include
         with:
           target: ${{ matrix.platform.target }}
           args: --release --out dist --find-interpreter
