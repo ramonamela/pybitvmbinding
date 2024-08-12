@@ -50,6 +50,11 @@ jobs:
           export OPENSSL_LIB_DIR=/usr/lib/ssl/lib
           export OPENSSL_INCLUDE_DIR=/usr/include/openssl
           export DEP_OPENSSL_INCLUDE=/usr/include/openssl
+      - name: Install PERL dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y cpanminus
+          cpanm IPC::Cmd
       - name: Build wheels
         uses: PyO3/maturin-action@v1
         with:
