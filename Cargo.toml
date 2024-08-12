@@ -10,12 +10,14 @@ crate-type = ["cdylib"]
 
 [dependencies]
 pyo3 = "0.20.0"
+bitcoin-script-stack = { git = "https://github.com/FairgateLabs/rust-bitcoin-script-stack" }
 bitcoin-script = { git = "https://github.com/BitVM/rust-bitcoin-script" }
 bitcoin = { git = "https://github.com/rust-bitcoin/rust-bitcoin", branch = "bitvm", features = ["rand-std"]}
-bitvm = { git = "https://github.com/BitVM/BitVM" }
+bitvm = { git = "https://github.com/ramonamela/BitVM", branch = "stack_efficient_sha256" }
 strum = "0.26"
 strum_macros = "0.26"
 hex = "0.4.3"
+ripemd = "0.1.3"
 bitcoin-scriptexec = { git = "https://github.com/BitVM/rust-bitcoin-scriptexec/"}
 serde = { version = "1.0.197", features = ["derive"] }
 num-bigint = "0.4.4"
@@ -58,3 +60,15 @@ branch = "bitvm"
 [patch.crates-io.bitcoin-units]
 git = "https://github.com/rust-bitcoin/rust-bitcoin"
 branch = "bitvm"
+
+[[bin]]
+name = "test"
+path = "scripts/test.rs"
+
+[[bin]]
+name = "test_2"
+path = "scripts/test_2.rs"
+
+[[bin]]
+name = "generate_witness"
+path = "scripts/generate_witness.rs"
