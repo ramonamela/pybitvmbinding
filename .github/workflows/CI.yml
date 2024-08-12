@@ -46,19 +46,26 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y cpanminus
-          cpanm --local-lib=~/perl5 local::lib
-          eval $(perl -I ~/perl5/lib/perl5/ -Mlocal::lib=~/perl5)
-          cpanm IPC::Cmd File::Spec File::Basename
-          echo 'export PERL5LIB=~/perl5/lib/perl5:$PERL5LIB' >> $GITHUB_ENV
-          echo 'export PATH=~/perl5/bin:$PATH' >> $GITHUB_ENV
+          cpanm --sudo IPC::Cmd File::Spec File::Basename
+          echo 'export PERL5LIB=/usr/local/share/perl5:$PERL5LIB' >> $GITHUB_ENV
+          echo 'export PATH=/usr/local/bin:$PATH' >> $GITHUB_ENV
       - name: Install OpenSSL
-        run: sudo apt-get update && sudo apt-get install -y make pkg-config libssl-dev
+        run: |
+          sudo apt-get update && sudo apt-get install -y make pkg-config libssl-dev
+          sudo cpanm IPC::Cmd File::Spec File::Basename
       - name: Set OpenSSL environment variables
         run: |
-          export OPENSSL_DIR=/usr/lib/ssl
-          export OPENSSL_LIB_DIR=/usr/lib/ssl/lib
-          export OPENSSL_INCLUDE_DIR=/usr/include/openssl
-          export DEP_OPENSSL_INCLUDE=/usr/include/openssl
+          echo 'export OPENSSL_DIR=/usr/lib/ssl' >> $GITHUB_ENV
+          echo 'export OPENSSL_LIB_DIR=/usr/lib/ssl/lib' >> $GITHUB_ENV
+          echo 'export OPENSSL_INCLUDE_DIR=/usr/include/openssl' >> $GITHUB_ENV
+          echo 'export DEP_OPENSSL_INCLUDE=/usr/include/openssl' >> $GITHUB_ENV
+          echo 'export PERL5LIB=/usr/local/share/perl5:$PERL5LIB' >> $GITHUB_ENV
+      - name: Verify Perl installation
+        run: |
+          perl -V
+          perl -e 'use IPC::Cmd; print "IPC::Cmd is installed\n"'
+          perl -e 'use File::Spec; print "File::Spec is installed\n"'
+          perl -e 'use File::Basename; print "File::Basename is installed\n"'
       - name: Build wheels
         uses: PyO3/maturin-action@v1
         with:
