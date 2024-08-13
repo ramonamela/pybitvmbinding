@@ -52,7 +52,7 @@ jobs:
       - name: Install OpenSSL
         run: |
           sudo apt-get update && sudo apt-get install -y make pkg-config libssl-dev libudev-dev perl librust-openssl-sys-dev build-essential
-          sudo cpanm IPC::Cmd File::Spec File::Basename
+          sudo cpanm --local-lib=/usr/local/share/perl5 IPC::Cmd File::Spec File::Basename
       - name: Verify Perl installation
         run: |
           perl -V
