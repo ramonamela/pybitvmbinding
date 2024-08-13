@@ -51,15 +51,8 @@ jobs:
           echo 'export PATH=/usr/local/bin:$PATH' >> $GITHUB_ENV
       - name: Install OpenSSL
         run: |
-          sudo apt-get update && sudo apt-get install -y make pkg-config libssl-dev
+          sudo apt-get update && sudo apt-get install -y make pkg-config libssl-dev libudev-dev perl librust-openssl-sys-dev build-essential
           sudo cpanm IPC::Cmd File::Spec File::Basename
-      - name: Set OpenSSL environment variables
-        run: |
-          echo 'export OPENSSL_DIR=/usr/lib/ssl' >> $GITHUB_ENV
-          echo 'export OPENSSL_LIB_DIR=/usr/lib/ssl/lib' >> $GITHUB_ENV
-          echo 'export OPENSSL_INCLUDE_DIR=/usr/include/openssl' >> $GITHUB_ENV
-          echo 'export DEP_OPENSSL_INCLUDE=/usr/include/openssl' >> $GITHUB_ENV
-          echo 'export PERL5LIB=/usr/local/share/perl5:$PERL5LIB' >> $GITHUB_ENV
       - name: Verify Perl installation
         run: |
           perl -V
