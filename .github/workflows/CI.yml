@@ -51,7 +51,7 @@ jobs:
           echo 'export PATH=/usr/local/bin:$PATH' >> $GITHUB_ENV
       - name: Install OpenSSL
         run: |
-          sudo apt-get update && sudo apt-get install -y make pkg-config libssl-dev libudev-dev perl librust-openssl-sys-dev build-essential
+          sudo apt-get update && sudo apt-get install -y make pkg-config libssl-dev libudev-dev perl librust-openssl-sys-dev build-essential perl-core
           sudo cpanm IPC::Cmd File::Spec File::Basename
       - name: Verify Perl installation
         run: |
