@@ -15,7 +15,7 @@ openssl = { version = "0.10.66", features = ["vendored"] }
 bitcoin-script-stack = { git = "https://github.com/FairgateLabs/rust-bitcoin-script-stack", features = ["interactive"] }
 bitcoin-script = { git = "https://github.com/BitVM/rust-bitcoin-script" }
 bitcoin = { git = "https://github.com/rust-bitcoin/rust-bitcoin", branch = "bitvm", features = ["rand-std"]}
-bitvm = { git = "https://github.com/ramonamela/BitVM", branch = "feature_rebase" }
+bitvm = { git = "https://github.com/ramonamela/BitVM", branch = "stack_efficient_sha256" }
 #strum = "0.26"
 #strum_macros = "0.26"
 hex = "0.4.3"
