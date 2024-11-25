@@ -1,10 +1,7 @@
 #[allow(dead_code)]
 // Re-export what is needed to write treepp scripts
 pub mod treepp {
-    pub use bitcoin_script::{define_pushable, script};
-
-    define_pushable!();
-    pub use bitcoin::ScriptBuf as Script;
+    pub use bitcoin_script::{script, Script};
 }
 
 use pyo3::prelude::*;
@@ -31,7 +28,8 @@ pub fn return_complex_script() -> PyResult<Vec<u8>> {
         { u4_drop(64) }
         OP_TRUE
     };
-    Ok(script.into_bytes())
+    Ok(script.compile().into_bytes())
+    //Ok(script)
 }
 
 #[pyfunction]
@@ -39,7 +37,8 @@ pub fn sha_256_script(size: u32) -> PyResult<Vec<u8>> {
     let script = script! {
         { sha256(size) }
     };
-    Ok(script.into_bytes())
+    Ok(script.compile().into_bytes())
+    //Ok(script)
 }
 
 #[pyfunction]
